@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 import pytest
 import pytest_asyncio
@@ -49,7 +49,7 @@ async def access_token():
 @pytest_asyncio.fixture
 async def test_tournament():
     async with TestingSessionLocal() as session:
-        tournament = Tournament(name="Test Tournament", max_players=10, start_at=datetime.utcnow() + timedelta(days=1))
+        tournament = Tournament(name="Test Tournament", max_players=10, start_at=datetime.now(UTC) + timedelta(days=1))
         session.add(tournament)
         await session.commit()
         await session.refresh(tournament)
@@ -68,7 +68,7 @@ async def test_register_user():
 
 @pytest.mark.asyncio
 async def test_create_tournament(access_token):
-    tournament_data = {"name": "New Tournament", "max_players": 10, "start_at": (datetime.utcnow() + timedelta(days=1)).isoformat()}
+    tournament_data = {"name": "New Tournament", "max_players": 10, "start_at": (datetime.now(UTC) + timedelta(days=1)).isoformat()}
     response = client.post("/tournaments/", json=tournament_data, headers={"Authorization": f"Bearer {access_token}"})
     assert response.status_code == 200
     data = response.json()

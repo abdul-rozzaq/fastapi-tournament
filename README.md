@@ -1,6 +1,5 @@
 # Mini Tournament API – FastAPI asosida
 
-
 ## 🚀 Texnologiyalar
 
 - Python 3.11+
@@ -20,8 +19,8 @@
 1. **Kodni klonlash:**
 
 ```bash
-git clone https://github.com/username/tournament-api.git
-cd tournament-api
+git clone https://github.com/abdul-rozzaq/fastapi-tournament.git
+cd fastapi-tournament
 ```
 
 2. **.env fayl yaratish:**

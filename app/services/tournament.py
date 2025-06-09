@@ -59,8 +59,7 @@ class TournamentService:
         return registration
 
     async def check_registration_validity(self, tournament: Tournament, user_id: int):
-        # if tournament.start_at < datetime.now(UTC):
-        if tournament.start_at < datetime.now(UTC).replace(tzinfo=None):
+        if tournament.start_at.replace(tzinfo=UTC) < datetime.now(UTC):
             raise HTTPException(400, "Tournament allaqachon boshlangan")
 
         if tournament.max_players <= len(tournament.registrations):
