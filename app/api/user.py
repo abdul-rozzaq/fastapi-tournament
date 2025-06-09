@@ -13,7 +13,9 @@ async def login(data: UserLogin, service: DBUserService):
     user = await service.get_by_email(data.email)
 
     if not verify_password(data.password, user.hashed_password):  # type: ignore
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email yoki parol noto'g'ri")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="Email yoki parol noto'g'ri"
+        )
 
     user_response = UserRead.model_validate(user)
     access_token = create_access_token(user_response.model_dump())

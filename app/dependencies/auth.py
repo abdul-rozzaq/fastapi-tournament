@@ -12,11 +12,16 @@ from app.services.user import DBUserService
 bearer_scheme = HTTPBearer()
 
 
-async def get_current_user(service: DBUserService, credentials: Annotated[HTTPAuthorizationCredentials, Depends(bearer_scheme)]):
+async def get_current_user(
+    service: DBUserService,
+    credentials: Annotated[HTTPAuthorizationCredentials, Depends(bearer_scheme)],
+):
     credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
     try:
-        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM])
+        payload = jwt.decode(
+            credentials.credentials, SECRET_KEY, algorithms=[ALGORITHM]
+        )
 
         email = payload.get("email")
 

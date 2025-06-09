@@ -1,4 +1,3 @@
-
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, status
@@ -22,9 +21,13 @@ class UserService:
         exist_user = result.scalars().first()
 
         if exist_user:
-            raise HTTPException(status.HTTP_403_FORBIDDEN, "User with this email already exists")
+            raise HTTPException(
+                status.HTTP_403_FORBIDDEN, "User with this email already exists"
+            )
 
-        new_user = User(name=user.name, email=user.email, hashed_password=hashed_password)
+        new_user = User(
+            name=user.name, email=user.email, hashed_password=hashed_password
+        )
 
         self.db.add(new_user)
 

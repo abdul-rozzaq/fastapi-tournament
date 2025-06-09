@@ -12,7 +12,6 @@ from app.schemas.tournament import TournamentCreate
 
 
 class TournamentService:
-
     def __init__(self, db: AsyncSession) -> None:
         self.db = db
 
@@ -50,7 +49,9 @@ class TournamentService:
 
         await self.check_registration_validity(tournament, user_id)
 
-        registration = TournamentRegistration(user_id=user_id, tournament_id=tournament_id)
+        registration = TournamentRegistration(
+            user_id=user_id, tournament_id=tournament_id
+        )
 
         self.db.add(registration)
 
@@ -81,7 +82,11 @@ class TournamentService:
         return registration
 
     async def get_players(self, id) -> list[User]:
-        stmt = select(User).join(TournamentRegistration).where(TournamentRegistration.tournament_id == id)
+        stmt = (
+            select(User)
+            .join(TournamentRegistration)
+            .where(TournamentRegistration.tournament_id == id)
+        )
 
         result = await self.db.execute(stmt)
         users = result.scalars().all()

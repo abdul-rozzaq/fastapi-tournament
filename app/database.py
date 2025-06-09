@@ -18,4 +18,6 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 engine = create_async_engine(url=DATABASE_URL)
 
 # SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False)
-AsyncSessionLocal = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)  # type: ignore
+AsyncSessionLocal = sessionmaker(
+    bind=engine, class_=AsyncSession, expire_on_commit=False
+)  # type: ignore

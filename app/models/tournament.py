@@ -20,9 +20,13 @@ class Tournament(Base):
     max_players = Column(Integer, nullable=False)
     start_at = Column(DateTime(timezone=True), nullable=False)
 
-    registrations = relationship("TournamentRegistration", back_populates="tournament", lazy="selectin")
+    registrations = relationship(
+        "TournamentRegistration", back_populates="tournament", lazy="selectin"
+    )
 
-    __table_args__ = (CheckConstraint("max_players >= 1", "check_max_players_positive"),)
+    __table_args__ = (
+        CheckConstraint("max_players >= 1", "check_max_players_positive"),
+    )
 
 
 class TournamentRegistration(Base):
