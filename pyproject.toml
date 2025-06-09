@@ -2,9 +2,7 @@
 name = "fastapi-tournament"
 version = "0.1.0"
 description = ""
-authors = [
-    {name = "Abdurazzoq Abdusalomov",email = "rayyan.dev@mail.ru"}
-]
+authors = [{ name = "Abdurazzoq Abdusalomov", email = "rayyan.dev@mail.ru" }]
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
@@ -12,7 +10,6 @@ dependencies = [
     "annotated-types (==0.7.0)",
     "anyio (==4.9.0)",
     "asyncpg (==0.30.0)",
-    "bcrypt (==4.3.0)",
     "certifi (==2025.4.26)",
     "click (==8.2.1)",
     "dnspython (==2.7.0)",
@@ -31,7 +28,6 @@ dependencies = [
     "markdown-it-py (==3.0.0)",
     "markupsafe (==3.0.2)",
     "mdurl (==0.1.2)",
-    "passlib (==1.7.4)",
     "psycopg2-binary (==2.9.10)",
     "pydantic (==2.11.5)",
     "pydantic-core (==2.33.2)",
@@ -52,7 +48,9 @@ dependencies = [
     "uvicorn (==0.34.3)",
     "uvloop (==0.21.0)",
     "watchfiles (==1.0.5)",
-    "websockets (==15.0.1)"
+    "websockets (==15.0.1)",
+    "bcrypt (==4.0.1)",
+    "passlib (>=1.7.4,<2.0.0)",
 ]
 
 
@@ -62,4 +60,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.11.13"
-
+pytest = "^8.4.0"
+pytest-asyncio = "^1.0.0"
+aiosqlite = "^0.21.0"

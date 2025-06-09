@@ -49,9 +49,7 @@ class TournamentService:
 
         await self.check_registration_validity(tournament, user_id)
 
-        registration = TournamentRegistration(
-            user_id=user_id, tournament_id=tournament_id
-        )
+        registration = TournamentRegistration(user_id=user_id, tournament_id=tournament_id)
 
         self.db.add(registration)
 
@@ -61,7 +59,8 @@ class TournamentService:
         return registration
 
     async def check_registration_validity(self, tournament: Tournament, user_id: int):
-        if tournament.start_at < datetime.now(UTC):
+        # if tournament.start_at < datetime.now(UTC):
+        if tournament.start_at < datetime.now(UTC).replace(tzinfo=None):
             raise HTTPException(400, "Tournament allaqachon boshlangan")
 
         if tournament.max_players <= len(tournament.registrations):
@@ -82,11 +81,7 @@ class TournamentService:
         return registration
 
     async def get_players(self, id) -> list[User]:
-        stmt = (
-            select(User)
-            .join(TournamentRegistration)
-            .where(TournamentRegistration.tournament_id == id)
-        )
+        stmt = select(User).join(TournamentRegistration).where(TournamentRegistration.tournament_id == id)
 
         result = await self.db.execute(stmt)
         users = result.scalars().all()
