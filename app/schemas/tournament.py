@@ -1,6 +1,6 @@
-from typing import List
-from pydantic import BaseModel, Field
 from datetime import datetime
+
+from pydantic import BaseModel, Field
 
 from app.schemas.registration import RegistrationRead
 
@@ -20,7 +20,7 @@ class TournamentCreate(TournamentBase):
 
 class TournamentRead(TournamentBase):
     id: int
-    registrations: List[RegistrationRead] = []
+    registrations: list[RegistrationRead] = []
 
     class Config:
         from_attributes = True

@@ -1,10 +1,8 @@
-from typing import Annotated
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import HTTPAuthorizationCredentials
+from fastapi import APIRouter, HTTPException, status
 
+from app.dependencies.auth import CurrentUser
 from app.schemas.user import AuthResponse, UserCreate, UserLogin, UserRead
 from app.services.user import DBUserService
-from app.dependencies.auth import CurrentUser, bearer_scheme
 from app.utils import create_access_token, verify_password
 
 router = APIRouter(tags=["user"], prefix="/user")

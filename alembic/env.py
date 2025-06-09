@@ -1,13 +1,10 @@
 from logging.config import fileConfig
 
-from sqlalchemy.ext.asyncio import async_engine_from_config, AsyncEngine
-
 from sqlalchemy import pool
+from sqlalchemy.ext.asyncio import async_engine_from_config
 
 from alembic import context
-
 from app.database import DATABASE_URL, Base
-from app.models import tournament, user
 
 config = context.config
 

@@ -1,13 +1,9 @@
+from datetime import datetime, timedelta
+
 import jwt
-
-from typing import Optional
-
 from passlib.context import CryptContext
 
-from datetime import timedelta, datetime
-
-from app.config import SECRET_KEY, ALGORITHM
-
+from app.config import ALGORITHM, SECRET_KEY
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -20,7 +16,7 @@ def verify_password(password: str, hashed_password: str) -> bool:
     return pwd_context.verify(password, hashed_password)
 
 
-def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
+def create_access_token(data: dict, expires_delta: timedelta | None = None) -> str:
     to_encode = data.copy()
 
     if expires_delta:

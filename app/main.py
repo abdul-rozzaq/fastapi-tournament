@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 
-from .api import user, tournament
-
+from .api import tournament, user
 
 app = FastAPI()
 

@@ -1,15 +1,13 @@
-import jwt
-from jwt.exceptions import InvalidTokenError
-
 from typing import Annotated
 
+import jwt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from jwt.exceptions import InvalidTokenError
 
+from app.config import ALGORITHM, SECRET_KEY
 from app.models.user import User
-from app.config import SECRET_KEY, ALGORITHM
 from app.services.user import DBUserService
-
 
 bearer_scheme = HTTPBearer()
 
@@ -26,7 +24,7 @@ async def get_current_user(service: DBUserService, credentials: Annotated[HTTPAu
             raise credentials_exception
 
     except InvalidTokenError:
-        raise credentials_exception
+        raise credentials_exception from None
 
     user = await service.get_by_email(email)
     return user

@@ -1,7 +1,7 @@
-from datetime import datetime, timezone
-from typing import Annotated, List
-from fastapi import Depends, HTTPException, status
+from datetime import UTC, datetime
+from typing import Annotated
 
+from fastapi import Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -60,7 +60,7 @@ class TournamentService:
         return registration
 
     async def check_registration_validity(self, tournament: Tournament, user_id: int):
-        if tournament.start_at < datetime.now(timezone.utc):
+        if tournament.start_at < datetime.now(UTC):
             raise HTTPException(400, "Tournament allaqachon boshlangan")
 
         if tournament.max_players <= len(tournament.registrations):
@@ -80,7 +80,7 @@ class TournamentService:
 
         return registration
 
-    async def get_players(self, id) -> List[User]:
+    async def get_players(self, id) -> list[User]:
         stmt = select(User).join(TournamentRegistration).where(TournamentRegistration.tournament_id == id)
 
         result = await self.db.execute(stmt)

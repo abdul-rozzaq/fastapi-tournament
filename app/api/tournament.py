@@ -1,16 +1,14 @@
-from typing import List
 from fastapi import APIRouter
 
 from app.dependencies.auth import CurrentUser
-from app.schemas.tournament import TournamentRead, TournamentCreate
+from app.schemas.tournament import TournamentCreate, TournamentRead
 from app.schemas.user import UserRead
 from app.services.tournament import DBTournamentService
-
 
 router = APIRouter(tags=["tournament"], prefix="/tournaments")
 
 
-@router.get("/", response_model=List[TournamentRead])
+@router.get("/", response_model=list[TournamentRead])
 async def get_tournaments(current_user: CurrentUser, service: DBTournamentService):
     return await service.get_all()
 
@@ -30,6 +28,6 @@ async def register_tournament(id: int, current_user: CurrentUser, service: DBTou
     return await service.register(user_id=current_user.id, tournament_id=id)
 
 
-@router.post("/{id}/players", response_model=List[UserRead])
+@router.post("/{id}/players", response_model=list[UserRead])
 async def tournament_players(id: int, current_user: CurrentUser, service: DBTournamentService):
     return await service.get_players(id)
