@@ -1,47 +1,35 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter
 
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
-
-from app.dependencies.database import get_db
-from app.models.tournament import Tournament
+from app.dependencies.auth import CurrentUser
 from app.schemas.tournament import TournamentRead, TournamentCreate
+from app.schemas.user import UserRead
 from app.services.tournament import DBTournamentService
 
 
 router = APIRouter(tags=["tournament"], prefix="/tournaments")
 
-"""
-@router.get("/", response_model=List[TournamentRead])
-async def get_tournaments(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(select(Tournament))
-    tournaments = result.scalars().all()
-    return tournaments
-
-"""
-
 
 @router.get("/", response_model=List[TournamentRead])
-async def get_tournaments(service: DBTournamentService):
+async def get_tournaments(current_user: CurrentUser, service: DBTournamentService):
     return await service.get_all()
 
 
 @router.get("/{id}", response_model=TournamentRead)
-async def get_tournament(id: int, service: DBTournamentService):
+async def get_tournament(current_user: CurrentUser, id: int, service: DBTournamentService):
     return await service.get_by_id(id)
 
 
 @router.post("/", response_model=TournamentRead)
-async def create_tournament(tournament: TournamentCreate, service: DBTournamentService):
-    return await service.create(tournament)
+async def create_tournament(current_user: CurrentUser, tournament: TournamentCreate, service: DBTournamentService):
+    return await service.create(user=current_user, tournament=tournament)
 
 
 @router.post("/{id}/register")
-async def register_tournament():
-    return
+async def register_tournament(id: int, current_user: CurrentUser, service: DBTournamentService):
+    return await service.register(user_id=current_user.id, tournament_id=id)
 
 
-@router.post("/{id}/players")
-async def tournament_players():
-    return
+@router.post("/{id}/players", response_model=List[UserRead])
+async def tournament_players(id: int, current_user: CurrentUser, service: DBTournamentService):
+    return await service.get_players(id)

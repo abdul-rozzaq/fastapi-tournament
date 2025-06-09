@@ -56,7 +56,7 @@ async def run_migrations_online() -> None:
 
 is_offline = context.is_offline_mode()
 
-print("Migration was performed in %s mode" % is_offline)
+print("Migration was performed in %s mode" % ("Offline" if is_offline else "Online"))
 
 if is_offline:
     run_migrations_offline()

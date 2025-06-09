@@ -1,0 +1,17 @@
+# .ruff.toml
+line-length = 88
+target-version = "py311" # yoki siz ishlatayotgan versiya
+
+[lint]
+select = [
+    "E",
+    "F",
+    "I",
+    "B",
+    "UP",
+] # xatoliklar, importlar, PyUpgrade va boshqalar
+ignore = ["E501"] # agar siz line-too-long xatosini e'tiborga olmasangiz
+
+[format]
+quote-style = "double"
+indent-style = "space"

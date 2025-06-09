@@ -10,7 +10,7 @@ class UserCreate(UserBase):
     password: str = Field(min_length=5)
 
 
-class UserResponse(UserBase):
+class UserRead(UserBase):
     id: int
 
     class Config:
@@ -23,5 +23,5 @@ class UserLogin(BaseModel):
 
 
 class AuthResponse(BaseModel):
-    user: UserResponse
+    user: UserRead
     token: str
